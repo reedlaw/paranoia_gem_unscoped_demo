@@ -1,4 +1,6 @@
 BugDemo::Application.routes.draw do
+  resources :companies
+
   resources :posts
 
   resources :users
