@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.with_deleted
+    @users = User.with_deleted.includes(:company, :posts)
 
     respond_to do |format|
       format.html # index.html.erb

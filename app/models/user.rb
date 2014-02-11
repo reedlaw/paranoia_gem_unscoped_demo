@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   belongs_to :company
 
   def posts
-    Post.with_deleted { super }
+    Post.unscoped { super }
   end
 
   def company
