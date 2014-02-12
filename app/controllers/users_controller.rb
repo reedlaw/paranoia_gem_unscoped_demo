@@ -4,7 +4,10 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.with_deleted.includes(:company, :posts)
+    @users = User.deleted_company # => Company Load (0.1ms)  SELECT "companies".* FROM "companies" WHERE "companies"."deleted_at" IS NULL AND "companies"."id" IN (1, 2)
+    @users = User.includes(:company) # => Company Load (0.1ms)  SELECT "companies".* FROM "companies" WHERE "companies"."deleted_at" IS NULL AND "companies"."id" IN (1, 2)
+    @users = User.all # => Company Load (0.2ms)  SELECT "companies".* FROM "companies" WHERE "companies"."id" = ? ORDER BY "companies"."id" ASC LIMIT 1  [["id", 1]]
+                      # => Company Load (0.1ms)  SELECT "companies".* FROM "companies" WHERE "companies"."id" = ? ORDER BY "companies"."id" ASC LIMIT 1  [["id", 2]]
 
     respond_to do |format|
       format.html # index.html.erb
